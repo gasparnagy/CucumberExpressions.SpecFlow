@@ -1,0 +1,30 @@
+﻿<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>CucumberExpressions.SpecFlow.3-1</id>
+    <version>1.0.0</version>
+    <title>CucumberExpressions support for SpecFlow v3.1 (SpecFlow plugin)</title>
+    <authors>Gaspar Nagy, Spec Solutions</authors>
+    <owners>Spec Solutions</owners>
+    <description>Allows using Cucumber Expressions with SpecFlow v3.1</description>
+    <summary>Allows using Cucumber Expressions with SpecFlow v3.1</summary>
+    <language>en-US</language>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright © 2020 Gaspar Nagy (Spec Solutions)</copyright>
+    <tags>specflow cucumber cucumber-expressions</tags>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="SpecFlow" version="[3.1, 3.2)"/>
+      </group>
+      <group targetFramework="netstandard2.0">
+        <dependency id="SpecFlow" version="[3.1, 3.2)"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="build\**\*" target="build"/>
+
+    <file src="bin\$config$\net45\CucumberExpressions.SpecFlow.SpecFlowPlugin.*" target="lib\net45"/>
+    <file src="bin\$config$\netstandard2.0\CucumberExpressions.SpecFlow.SpecFlowPlugin.dll" target="lib\netstandard2.0"/>
+    <file src="bin\$config$\netstandard2.0\CucumberExpressions.SpecFlow.SpecFlowPlugin.pdb" target="lib\netstandard2.0"/>
+  </files>
+</package>

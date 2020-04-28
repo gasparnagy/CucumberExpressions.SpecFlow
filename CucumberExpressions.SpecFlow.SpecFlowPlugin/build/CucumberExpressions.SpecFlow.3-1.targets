@@ -1,0 +1,8 @@
+﻿<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+
+    <_SpecFlowCucumberExpressionsPluginFramework Condition=" '$(TargetFrameworkIdentifier)' == '.NETCoreApp' ">netstandard2.0</_SpecFlowCucumberExpressionsPluginFramework>
+    <_SpecFlowCucumberExpressionsPluginFramework Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' ">net45</_SpecFlowCucumberExpressionsPluginFramework>
+    <_SpecFlowCucumberExpressionsPluginPath>$(MSBuildThisFileDirectory)\..\lib\$(_SpecFlowCucumberExpressionsPluginFramework)\CucumberExpressions.SpecFlow.SpecFlowPlugin.dll</_SpecFlowCucumberExpressionsPluginPath>
+  </PropertyGroup>
+</Project>
