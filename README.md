@@ -1,6 +1,8 @@
 # CucumberExpressions.SpecFlow
 
-[Cucumber expressions](https://cucumber.io/docs/cucumber/cucumber-expressions/) support for SpecFlow v3.1 (SpecFlow plugin).
+[Cucumber expressions](https://cucumber.io/docs/cucumber/cucumber-expressions/) support for SpecFlow v3.1 (SpecFlow plugin). 
+
+_Note: Cucumber expression support will be hopefully added to the core SpecFlow package in a future version. But for the current SpecFlow versions, it can be already used using this plugin._
 
 With Cucumber expressions you can specify your step definitions in a simpler way.
 
