@@ -10,7 +10,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
         private readonly Lazy<Regex> _regexProvider;
 
         public string ExpressionSource { get; }
-        public bool IsValid => Regex.ToString().StartsWith("error:");
+        public bool IsValid => !Regex.ToString().StartsWith("error:");
         public string ErrorMessage => IsValid ? null : Regex.ToString();
 
         public bool IsScoped => BindingScope != null;
