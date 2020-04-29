@@ -28,17 +28,17 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
             return new LateBoundStepDefinitionBindingWithSource(type, bindingMethod, bindingScope, expressionSource, () => CreateStepBindingRegex(type, expressionSource, bindingMethod));
         }
 
-        private Regex CreateStepBindingRegex(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod)
+        private Tuple<Regex, string> CreateStepBindingRegex(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod)
         {
             try
             {
                 var expression = _definitionMatchExpressionConverter.CreateExpression(expressionSource, type, bindingMethod);
-                return expression.GetRegex();
+                return new Tuple<Regex, string>(expression.GetRegex(), null);
             }
             catch (Exception ex)
             {
                 if (Assembly.GetEntryAssembly()?.FullName.StartsWith("deveroom") ?? false)
-                    return new Regex($"error: '{Regex.Escape(expressionSource)}': {Regex.Escape(ex.Message)}|.*".Replace(@"\ ", " ").Replace(@"\{", "{"));
+                    return new Tuple<Regex, string>(null, ex.Message);
                 throw new CucumberExpressionException($"error: '{expressionSource}': {ex.Message}");
             }
         }

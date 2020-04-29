@@ -7,24 +7,28 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
 {
     public class LateBoundStepDefinitionBindingWithSource : MethodBinding, IStepDefinitionBindingWithSource
     {
-        private readonly Lazy<Regex> _regexProvider;
+        private readonly Lazy<Tuple<Regex, string>> _regexProvider;
 
         public string ExpressionSource { get; }
-        public bool IsValid => !Regex.ToString().StartsWith("error:");
-        public string ErrorMessage => IsValid ? null : Regex.ToString();
+        public bool IsValid => _regexProvider.Value.Item2 == null;
+        public string ErrorMessage => _regexProvider.Value.Item2;
 
         public bool IsScoped => BindingScope != null;
         public BindingScope BindingScope { get; }
         public StepDefinitionType StepDefinitionType { get; }
-        public Regex Regex => _regexProvider.Value;
+        public Regex Regex => _regexProvider.Value.Item1 ?? GetErrorRegex();
 
-        public LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Func<Regex> regexFactory)
-            : this(stepDefinitionType, bindingMethod, bindingScope, expressionSource, new Lazy<Regex>(regexFactory, true))
+        private Regex GetErrorRegex()
         {
-
+            return new Regex($"error: '{Regex.Escape(ExpressionSource)}': {Regex.Escape(ErrorMessage)}|.*".Replace(@"\ ", " ").Replace(@"\{", "{"));
         }
 
-        protected LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Lazy<Regex> regexProvider) 
+        public LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Func<Tuple<Regex, string>> regexFactory)
+            : this(stepDefinitionType, bindingMethod, bindingScope, expressionSource, new Lazy<Tuple<Regex, string>>(regexFactory, true))
+        {
+        }
+
+        protected LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Lazy<Tuple<Regex, string>> regexProvider) 
             : base(bindingMethod)
         {
             _regexProvider = regexProvider;
