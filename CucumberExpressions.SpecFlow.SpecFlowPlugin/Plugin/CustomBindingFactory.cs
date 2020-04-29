@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
@@ -24,16 +25,20 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
 
         public IStepDefinitionBinding CreateStepBinding(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod, BindingScope bindingScope)
         {
+            return new LateBoundStepDefinitionBindingWithSource(type, bindingMethod, bindingScope, expressionSource, () => CreateStepBindingRegex(type, expressionSource, bindingMethod));
+        }
+
+        private Regex CreateStepBindingRegex(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod)
+        {
             try
             {
                 var expression = _definitionMatchExpressionConverter.CreateExpression(expressionSource, type, bindingMethod);
-                var regex = expression.GetRegex();
-                return new StepDefinitionBindingWithSource(type, regex, bindingMethod, bindingScope, expressionSource);
+                return expression.GetRegex();
             }
             catch (Exception ex)
             {
-                if (Assembly.GetEntryAssembly()?.FullName?.StartsWith("deveroom") ?? false)
-                    return new InvalidStepDefinitionBinding(type, bindingMethod, bindingScope, ex.Message, expressionSource);
+                if (Assembly.GetEntryAssembly()?.FullName.StartsWith("deveroom") ?? false)
+                    return new Regex($"error: '{Regex.Escape(expressionSource)}': {Regex.Escape(ex.Message)}|.*".Replace(@"\ ", " ").Replace(@"\{", "{"));
                 throw new CucumberExpressionException($"error: '{expressionSource}': {ex.Message}");
             }
         }

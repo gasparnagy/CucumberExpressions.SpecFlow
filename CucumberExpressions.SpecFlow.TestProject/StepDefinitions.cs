@@ -6,10 +6,10 @@ namespace CucumberExpressions.SpecFlow.TestProject
     [Binding]
     public class StepDefinitions
     {
-        [StepArgumentTransformation]
-        public Person PersonConverter(string name)
+        [Given("I registered as {}")]
+        public void GivenIRegisteredAsPerson(Person person)
         {
-            return new Person(name);
+            //...
         }
 
         [Given("I logged in as {Person}")]
@@ -28,6 +28,12 @@ namespace CucumberExpressions.SpecFlow.TestProject
         public void ThenMyBasketShouldContainBooks(int expectedCopies)
         {
             //...
+        }
+
+        [StepArgumentTransformation]
+        public Person PersonConverter(string name)
+        {
+            return new Person(name);
         }
     }
 }
