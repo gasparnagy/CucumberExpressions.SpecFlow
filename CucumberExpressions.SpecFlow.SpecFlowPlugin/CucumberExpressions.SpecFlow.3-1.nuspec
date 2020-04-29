@@ -1,12 +1,13 @@
 ﻿<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>CucumberExpressions.SpecFlow.3-1</id>
-    <version>1.0.0</version>
+    <version>1.0.0-localdev</version>
     <title>CucumberExpressions support for SpecFlow v3.1 (SpecFlow plugin)</title>
     <authors>Gaspar Nagy, Spec Solutions</authors>
     <owners>Spec Solutions</owners>
     <description>Allows using Cucumber Expressions with SpecFlow v3.1</description>
-    <summary>Allows using Cucumber Expressions with SpecFlow v3.1</summary>
+    <projectUrl>https://github.com/gasparnagy/CucumberExpressions.SpecFlow</projectUrl>
+    <license type="expression">MIT</license>
     <language>en-US</language>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright © 2020 Gaspar Nagy (Spec Solutions)</copyright>
