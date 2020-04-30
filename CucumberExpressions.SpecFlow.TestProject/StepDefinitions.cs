@@ -30,6 +30,20 @@ namespace CucumberExpressions.SpecFlow.TestProject
             //...
         }
 
+        // fallback to regex
+        [Given(@"^something$")]
+        public void Something()
+        {
+            //...
+        }
+
+        // fallback to method-based
+        [Given]
+        public void Given_something_FOO_else(int foo)
+        {
+
+        }
+
         [StepArgumentTransformation]
         public Person PersonConverter(string name)
         {
