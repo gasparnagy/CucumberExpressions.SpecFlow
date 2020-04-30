@@ -9,9 +9,9 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
     {
         private readonly Lazy<Tuple<Regex, string>> _regexProvider;
 
-        public string ExpressionSource { get; }
-        public bool IsValid => _regexProvider.Value.Item2 == null;
-        public string ErrorMessage => _regexProvider.Value.Item2;
+        public string SourceExpression { get; }
+        public bool IsValid => Error == null;
+        public string Error => _regexProvider.Value.Item2;
 
         public bool IsScoped => BindingScope != null;
         public BindingScope BindingScope { get; }
@@ -20,21 +20,21 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
 
         private Regex GetErrorRegex()
         {
-            return new Regex($"error: '{Regex.Escape(ExpressionSource)}': {Regex.Escape(ErrorMessage)}|.*".Replace(@"\ ", " ").Replace(@"\{", "{"));
+            return new Regex($"error: '{Regex.Escape(SourceExpression)}': {Regex.Escape(Error)}|.*".Replace(@"\ ", " ").Replace(@"\{", "{"));
         }
 
-        public LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Func<Tuple<Regex, string>> regexFactory)
-            : this(stepDefinitionType, bindingMethod, bindingScope, expressionSource, new Lazy<Tuple<Regex, string>>(regexFactory, true))
+        public LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string sourceExpression, Func<Tuple<Regex, string>> regexFactory)
+            : this(stepDefinitionType, bindingMethod, bindingScope, sourceExpression, new Lazy<Tuple<Regex, string>>(regexFactory, true))
         {
         }
 
-        protected LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string expressionSource, Lazy<Tuple<Regex, string>> regexProvider) 
+        protected LateBoundStepDefinitionBindingWithSource(StepDefinitionType stepDefinitionType, IBindingMethod bindingMethod, BindingScope bindingScope, string sourceExpression, Lazy<Tuple<Regex, string>> regexProvider) 
             : base(bindingMethod)
         {
             _regexProvider = regexProvider;
             StepDefinitionType = stepDefinitionType;
             BindingScope = bindingScope;
-            ExpressionSource = expressionSource;
+            SourceExpression = sourceExpression;
         }
     }
 }

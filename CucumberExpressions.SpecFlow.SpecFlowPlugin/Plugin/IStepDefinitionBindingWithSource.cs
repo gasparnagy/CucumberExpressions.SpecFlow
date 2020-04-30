@@ -5,9 +5,9 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
 {
     public interface IStepDefinitionBindingWithSource : IStepDefinitionBinding
     {
-        string ExpressionSource { get; }
+        string SourceExpression { get; }
 
         bool IsValid { get; }
-        string ErrorMessage { get; }
+        string Error { get; }
     }
 }

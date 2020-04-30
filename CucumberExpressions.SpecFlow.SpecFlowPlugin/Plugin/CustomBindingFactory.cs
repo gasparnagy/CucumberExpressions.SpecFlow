@@ -23,9 +23,9 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
             return _defaultBindingFactory.CreateHookBinding(bindingMethod, hookType, bindingScope, hookOrder);
         }
 
-        public IStepDefinitionBinding CreateStepBinding(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod, BindingScope bindingScope)
+        public IStepDefinitionBinding CreateStepBinding(StepDefinitionType type, string sourceExpression, IBindingMethod bindingMethod, BindingScope bindingScope)
         {
-            return new LateBoundStepDefinitionBindingWithSource(type, bindingMethod, bindingScope, expressionSource, () => CreateStepBindingRegex(type, expressionSource, bindingMethod));
+            return new LateBoundStepDefinitionBindingWithSource(type, bindingMethod, bindingScope, sourceExpression ?? bindingMethod.Name, () => CreateStepBindingRegex(type, sourceExpression, bindingMethod));
         }
 
         private Tuple<Regex, string> CreateStepBindingRegex(StepDefinitionType type, string expressionSource, IBindingMethod bindingMethod)
