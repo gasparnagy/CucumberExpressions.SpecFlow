@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0;net471</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <NuspecFile>$(MSBuildThisFileDirectory)CucumberExpressions.SpecFlow.3-1.nuspec</NuspecFile>
+    <NuspecFile>$(MSBuildThisFileDirectory)CucumberExpressions.SpecFlow.3-3.nuspec</NuspecFile>
     <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SpecFlow" Version="3.1.97" />
+    <PackageReference Include="SpecFlow" Version="3.3.16-beta" />
   </ItemGroup>
 
 </Project>
