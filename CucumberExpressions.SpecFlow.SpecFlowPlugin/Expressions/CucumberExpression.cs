@@ -43,7 +43,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
 
         private string ProcessEscapes(string expression)
         {
-            return ESCAPE_PATTERN.Replace(expression, "\\\\$1");
+            return ESCAPE_PATTERN.Replace(expression, "\\$1");
         }
 
         private string ProcessAlternation(string expression)

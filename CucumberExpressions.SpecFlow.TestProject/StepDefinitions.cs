@@ -30,6 +30,12 @@ namespace CucumberExpressions.SpecFlow.TestProject
             //...
         }
 
+        [Then("they cost ${int} in total")]
+        public void ThenTheyCostInTotal(int expectedPrice)
+        {
+            //...
+        }
+
         // fallback to regex
         [Given(@"^something$")]
         public void Something()
