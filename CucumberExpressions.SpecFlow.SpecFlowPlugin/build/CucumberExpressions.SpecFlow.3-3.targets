@@ -2,7 +2,7 @@
   <PropertyGroup>
 
     <_SpecFlowCucumberExpressionsPluginFramework Condition=" '$(TargetFrameworkIdentifier)' == '.NETCoreApp' ">netstandard2.0</_SpecFlowCucumberExpressionsPluginFramework>
-    <_SpecFlowCucumberExpressionsPluginFramework Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' ">net45</_SpecFlowCucumberExpressionsPluginFramework>
+    <_SpecFlowCucumberExpressionsPluginFramework Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' ">net461</_SpecFlowCucumberExpressionsPluginFramework>
     <_SpecFlowCucumberExpressionsPluginPath>$(MSBuildThisFileDirectory)\..\lib\$(_SpecFlowCucumberExpressionsPluginFramework)\CucumberExpressions.SpecFlow.SpecFlowPlugin.dll</_SpecFlowCucumberExpressionsPluginPath>
   </PropertyGroup>
 </Project>
