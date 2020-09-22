@@ -1,11 +1,11 @@
 ﻿<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>CucumberExpressions.SpecFlow.3-3</id>
+    <id>CucumberExpressions.SpecFlow.3-4</id>
     <version>1.0.0-localdev</version>
-    <title>CucumberExpressions support for SpecFlow v3.3 (SpecFlow plugin)</title>
+    <title>CucumberExpressions support for SpecFlow v3.4 (SpecFlow plugin)</title>
     <authors>Gaspar Nagy, Spec Solutions</authors>
     <owners>Spec Solutions</owners>
-    <description>Allows using Cucumber Expressions with SpecFlow v3.3</description>
+    <description>Allows using Cucumber Expressions with SpecFlow v3.4</description>
     <projectUrl>https://github.com/gasparnagy/CucumberExpressions.SpecFlow</projectUrl>
     <license type="expression">MIT</license>
     <language>en-US</language>
@@ -14,13 +14,13 @@
     <tags>specflow cucumber cucumber-expressions</tags>
     <dependencies>
       <group targetFramework="net461">
-        <dependency id="SpecFlow" version="[3.3, 3.4)"/>
+        <dependency id="SpecFlow" version="[3.4, 3.5)"/>
       </group>
       <group targetFramework="net471">
-        <dependency id="SpecFlow" version="[3.3, 3.4)"/>
+        <dependency id="SpecFlow" version="[3.4, 3.5)"/>
       </group>
       <group targetFramework="netstandard2.0">
-        <dependency id="SpecFlow" version="[3.3, 3.4)"/>
+        <dependency id="SpecFlow" version="[3.4, 3.5)"/>
       </group>
     </dependencies>
   </metadata>

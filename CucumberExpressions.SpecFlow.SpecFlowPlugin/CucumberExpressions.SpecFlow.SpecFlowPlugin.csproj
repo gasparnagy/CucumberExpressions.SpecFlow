@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0;net471</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <NuspecFile>$(MSBuildThisFileDirectory)CucumberExpressions.SpecFlow.3-3.nuspec</NuspecFile>
+    <NuspecFile>$(MSBuildThisFileDirectory)CucumberExpressions.SpecFlow.3-4.nuspec</NuspecFile>
     <NuspecProperties>version=$(PackageVersion)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SpecFlow" Version="3.3.74" />
+    <PackageReference Include="SpecFlow" Version="3.4.8" />
   </ItemGroup>
 
 </Project>
