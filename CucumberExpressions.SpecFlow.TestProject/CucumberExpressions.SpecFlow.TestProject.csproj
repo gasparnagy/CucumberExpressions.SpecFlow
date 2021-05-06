@@ -7,10 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SpecFlow" Version="3.6.23" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.6.23" />
-    <PackageReference Include="SpecFlow.xUnit" Version="3.6.23" />
-    <!--<PackageReference Include="CucumberExpressions.SpecFlow.3-6" Version="1.0.0-localdev" />-->
+    <PackageReference Include="SpecFlow" Version="3.7.38" />
+    <PackageReference Include="SpecFlow.xUnit" Version="3.7.38" />
+    <!--<PackageReference Include="CucumberExpressions.SpecFlow.3-7" Version="1.0.0-localdev" />-->
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
