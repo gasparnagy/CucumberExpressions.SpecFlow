@@ -1,5 +1,6 @@
 using System;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace CucumberExpressions.SpecFlow.TestProject
 {
@@ -50,10 +51,38 @@ namespace CucumberExpressions.SpecFlow.TestProject
 
         }
 
+        [Then(@"the user should be {User}")]
+        public void ThenTheUserShouldBeUser(User user)
+        {
+            Assert.Equal("Marvin", user.Name);
+        }
+
+        [Then("the coordinates should be {Coordinate}")]
+        public void ThenTheCoordinatesShouldBe(Coordinate coordinate)
+        {
+            Assert.NotNull(coordinate);
+        }
+
+        [StepArgumentTransformation(@"(.*), (.*)")]
+        public Coordinate ConvertCoordinate(int xCoord, int yCoord)
+        {
+            return new Coordinate 
+            {
+                X = xCoord,
+                Y = yCoord
+            };
+        }
+
         [StepArgumentTransformation]
         public Person PersonConverter(string name)
         {
             return new Person(name);
+        }
+
+        [StepArgumentTransformation(@"user (.*)")]
+        public User UserConverter(string name)
+        {
+            return new User(name);
         }
     }
 }

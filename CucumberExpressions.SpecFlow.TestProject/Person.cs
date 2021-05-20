@@ -16,4 +16,16 @@ namespace CucumberExpressions.SpecFlow.TestProject
             return $"Person: {Name}";
         }
     }
+
+    public class User : Person
+    {
+        public User(string name) : base(name)
+        {
+        }
+
+        public override string ToString()
+        {
+            return $"User: {Name}";
+        }
+    }
 }

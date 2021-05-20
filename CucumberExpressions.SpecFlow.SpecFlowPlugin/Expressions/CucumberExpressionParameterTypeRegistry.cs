@@ -67,7 +67,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
             _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(@"""([^""]*)""", convertQuotedStringMethod, "string"));
             _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(@"'([^']*)'", convertQuotedStringMethod, "string"));
 
-            var userTransformations = _bindingRegistry.GetStepTransformations().Select(t => new UserDefinesCucumberExpressionParameterTypeTransformation(t));
+            var userTransformations = _bindingRegistry.GetStepTransformations().Select(t => new UserDefinedCucumberExpressionParameterTypeTransformation(t));
 
             var parameterTypes = builtInTransformations.Cast<ICucumberExpressionParameterTypeTransformation>()
                 .Concat(userTransformations)
