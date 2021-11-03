@@ -3,13 +3,13 @@
 set PRODVER=%1
 set CONFIG_VAL=Release
 
-@echo publishing version %PRODVER%, %CONFIG%, OK?
+@echo publishing version %PRODVER%, %CONFIG_VAL%, OK?
 @pause
 
 dotnet build -c "%CONFIG_VAL%" -p:PackageVersion=%PRODVER% -p:Version=%PRODVER%
 IF ERRORLEVEL 1 GOTO error
 
-copy /Y CucumberExpressions.SpecFlow.SpecFlowPlugin\bin\%CONFIG_VAL%\CucumberExpressions.SpecFlow.3-8.%PRODVER%.nupkg %NUGET_LOCAL_FEED%\CucumberExpressions.SpecFlow.3-8.%PRODVER%.nupkg
+copy /Y CucumberExpressions.SpecFlow.SpecFlowPlugin\bin\%CONFIG_VAL%\CucumberExpressions.SpecFlow.3-9.%PRODVER%.nupkg %NUGET_LOCAL_FEED%\CucumberExpressions.SpecFlow.3-9.%PRODVER%.nupkg
 IF ERRORLEVEL 1 GOTO error
 
 @popd
