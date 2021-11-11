@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
 
@@ -33,7 +32,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
             try
             {
                 var expression = _definitionMatchExpressionConverter.CreateExpression(expressionSource, type, bindingMethod);
-                return new Tuple<Regex, string>(expression.GetRegex(), null);
+                return new Tuple<Regex, string>(expression.Regex, null);
             }
             catch (Exception ex)
             {

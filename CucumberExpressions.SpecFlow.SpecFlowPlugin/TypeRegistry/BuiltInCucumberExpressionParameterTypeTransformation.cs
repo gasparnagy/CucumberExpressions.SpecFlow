@@ -1,6 +1,6 @@
 ﻿using TechTalk.SpecFlow.Bindings.Reflection;
 
-namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
+namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
 {
     public class BuiltInCucumberExpressionParameterTypeTransformation : ICucumberExpressionParameterTypeTransformation
     {

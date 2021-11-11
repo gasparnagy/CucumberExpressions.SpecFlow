@@ -1,10 +1,9 @@
 ﻿using System;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
-using System.Text.RegularExpressions;
 using RegexClass = System.Text.RegularExpressions.Regex;
 
-namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
+namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
 {
     public class UserDefinedCucumberExpressionParameterTypeTransformation : ICucumberExpressionParameterTypeTransformation
     {

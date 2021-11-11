@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow.Bindings.Reflection;
 
-namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
+namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
 {
-    public class CucumberExpressionParameterType
+    public class CucumberExpressionParameterType : ISpecFlowCucumberExpressionParameterType
     {
         internal const string MatchAllRegex = @"(.*)";
 
         public string Name { get; }
         public IBindingType TargetType { get; }
         public ICucumberExpressionParameterTypeTransformation[] Transformations { get; }
-
         public string[] RegexStrings { get; }
+
+        public bool UseForSnippets { get; } = true; //TODO: allow specifying
+        public int Weight { get; } = 0; //TODO: allow specifying
+
+        public Type ParameterType => ((RuntimeBindingType)TargetType).Type;
 
         public CucumberExpressionParameterType(string name, IBindingType targetType, IEnumerable<ICucumberExpressionParameterTypeTransformation> transformations)
         {

@@ -1,5 +1,6 @@
 using System;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Infrastructure;
 using Xunit;
 
 namespace CucumberExpressions.SpecFlow.TestProject
@@ -7,6 +8,13 @@ namespace CucumberExpressions.SpecFlow.TestProject
     [Binding]
     public class StepDefinitions
     {
+        private readonly ISpecFlowOutputHelper _outputHelper;
+
+        public StepDefinitions(ISpecFlowOutputHelper outputHelper)
+        {
+            _outputHelper = outputHelper;
+        }
+
         [Given("I registered as {}")]
         public void GivenIRegisteredAsPerson(Person person)
         {
@@ -22,7 +30,8 @@ namespace CucumberExpressions.SpecFlow.TestProject
         [When("I add {int} copy/copies of the book {string} into my basket")]
         public void WhenIAddCopyOfTheBookIntoMyBasket(int copies, string title)
         {
-            //...
+            _outputHelper.WriteLine($"title: {title}");
+            Assert.False(title.StartsWith("\""));
         }
 
         [Then("my basket should contain {Int32} book(s)")]
