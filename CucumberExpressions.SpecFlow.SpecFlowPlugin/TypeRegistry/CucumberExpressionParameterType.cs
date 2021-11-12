@@ -14,8 +14,8 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
         public ICucumberExpressionParameterTypeTransformation[] Transformations { get; }
         public string[] RegexStrings { get; }
 
-        public bool UseForSnippets { get; } = true; //TODO: allow specifying
-        public int Weight { get; } = 0; //TODO: allow specifying
+        public bool UseForSnippets { get; }
+        public int Weight { get; }
 
         public Type ParameterType => ((RuntimeBindingType)TargetType).Type;
 
@@ -24,6 +24,8 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
             Name = name;
             TargetType = targetType;
             Transformations = transformations.ToArray();
+            UseForSnippets = Transformations.Any(t => t.UseForSnippets);
+            Weight = Transformations.Max(t => t.Weight);
 
             var regexStrings = Transformations.Select(tr => tr.Regex).Distinct().ToArray();
             if (regexStrings.Length > 1 && regexStrings.Contains(MatchAllRegex))

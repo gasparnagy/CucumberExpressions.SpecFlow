@@ -7,5 +7,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
         string Name { get; }
         string Regex { get; }
         IBindingType TargetType { get; }
+        bool UseForSnippets { get; }
+        int Weight { get; }
     }
 }

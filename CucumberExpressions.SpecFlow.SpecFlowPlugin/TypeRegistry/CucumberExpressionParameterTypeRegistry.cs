@@ -44,12 +44,10 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
             var builtInTransformations = new[]
             {
                 // official cucumber expression types
-                new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, objectBindingType, name: string.Empty),
-                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.IntParameterRegex, intBindingType, ParameterTypeConstants.IntParameterName),
+                new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, objectBindingType, name: string.Empty, useForSnippets: false),
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.IntParameterRegex, intBindingType, ParameterTypeConstants.IntParameterName, weight: 1000),
                 new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.FloatParameterRegex, doubleBindingType, ParameterTypeConstants.FloatParameterName),
-                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.WordParameterRegex, stringBindingType, ParameterTypeConstants.WordParameterName),
-                //new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.StringParameterRegexDoubleQuote, stringBindingType, ParameterTypeConstants.StringParameterName),
-                //new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.StringParameterRegexApostrophe, stringBindingType, ParameterTypeConstants.StringParameterName),
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.WordParameterRegex, stringBindingType, ParameterTypeConstants.WordParameterName, useForSnippets: false),
 
                 // other types supported by SpecFlow by default: Make them accessible with type name (e.g. Int32)
                 new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, boolBindingType),
