@@ -46,7 +46,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
                 // official cucumber expression types
                 new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, objectBindingType, name: string.Empty),
                 new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.IntParameterRegex, intBindingType, ParameterTypeConstants.IntParameterName),
-                new BuiltInCucumberExpressionParameterTypeTransformation(@"(.*?)", doubleBindingType, ParameterTypeConstants.FloatParameterName), //TODO: make it specific based on the binding culture
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.FloatParameterRegex, doubleBindingType, ParameterTypeConstants.FloatParameterName),
                 new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.WordParameterRegex, stringBindingType, ParameterTypeConstants.WordParameterName),
                 //new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.StringParameterRegexDoubleQuote, stringBindingType, ParameterTypeConstants.StringParameterName),
                 //new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.StringParameterRegexApostrophe, stringBindingType, ParameterTypeConstants.StringParameterName),

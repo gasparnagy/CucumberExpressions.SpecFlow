@@ -46,6 +46,12 @@ namespace CucumberExpressions.SpecFlow.TestProject
             //...
         }
 
+        [Then(@"the weight of them is {float} kg")]
+        public void ThenTheWeightOfThemIsKg(double kilos)
+        {
+            // ...
+        }
+
         // fallback to regex
         [Given(@"^something$")]
         public void Something()
