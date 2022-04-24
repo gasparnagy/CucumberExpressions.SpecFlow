@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
 
@@ -33,14 +32,21 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
             try
             {
                 var expression = _definitionMatchExpressionConverter.CreateExpression(expressionSource, type, bindingMethod);
-                return new Tuple<Regex, string>(expression.GetRegex(), null);
+                return new Tuple<Regex, string>(expression.Regex, null);
             }
             catch (Exception ex)
             {
-                if (Assembly.GetEntryAssembly()?.FullName.StartsWith("deveroom") ?? false)
+                if (IsInvokedFromIde())
                     return new Tuple<Regex, string>(null, ex.Message);
                 throw new CucumberExpressionException($"error: '{expressionSource}': {ex.Message}");
             }
+        }
+
+        private static bool IsInvokedFromIde()
+        {
+            var assemblyFullName = Assembly.GetEntryAssembly()?.FullName;
+            return assemblyFullName != null && 
+                   (assemblyFullName.StartsWith("deveroom") || assemblyFullName.StartsWith("specflow-vs"));
         }
 
         public IStepArgumentTransformationBinding CreateStepArgumentTransformation(string regexString, IBindingMethod bindingMethod)

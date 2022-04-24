@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions;
+using CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
 
@@ -12,7 +12,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
         private static readonly Regex CommonRegexStepDefPatterns = new Regex(@"(\([^\)]+[\*\+]\)|\.\*)");
 
         private readonly IStepDefinitionRegexCalculator _stepDefinitionRegexCalculator;
-        private readonly CucumberExpressionParameterTypeRegistry _cucumberExpressionParameterTypeRegistry;
+        private readonly IParameterTypeRegistry _cucumberExpressionParameterTypeRegistry;
 
         public StepDefinitionMatchExpressionConverter(IStepDefinitionRegexCalculator stepDefinitionRegexCalculator, CucumberExpressionParameterTypeRegistry cucumberExpressionParameterTypeRegistry)
         {
@@ -34,14 +34,14 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Plugin
             return true;
         }
 
-        public IStepDefinitionMatchExpression CreateExpression(string expressionString, StepDefinitionType type, IBindingMethod bindingMethod)
+        public IExpression CreateExpression(string expressionString, StepDefinitionType type, IBindingMethod bindingMethod)
         {
             if (expressionString == null || !IsCucumberExpression(expressionString))
             {
                 if (expressionString == null)
                     expressionString = _stepDefinitionRegexCalculator.CalculateRegexFromMethod(type, bindingMethod);
 
-                return new RegexExpression(expressionString);
+                return new RegularExpression(new Regex(expressionString));
             }
 
             return new CucumberExpression(expressionString, _cucumberExpressionParameterTypeRegistry);

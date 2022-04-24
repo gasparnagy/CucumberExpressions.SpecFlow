@@ -5,17 +5,17 @@ using System.Linq;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
 
-namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
+namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
 {
-    public class CucumberExpressionParameterTypeRegistry
+    public class CucumberExpressionParameterTypeRegistry : IParameterTypeRegistry
     {
         private readonly IBindingRegistry _bindingRegistry;
-        private readonly Lazy<Dictionary<string, CucumberExpressionParameterType>> _parameterTypesByName;
+        private readonly Lazy<Dictionary<string, ISpecFlowCucumberExpressionParameterType>> _parameterTypesByName;
 
         public CucumberExpressionParameterTypeRegistry(IBindingRegistry bindingRegistry)
         {
             _bindingRegistry = bindingRegistry;
-            _parameterTypesByName = new Lazy<Dictionary<string, CucumberExpressionParameterType>>(InitializeRegistry, true);
+            _parameterTypesByName = new Lazy<Dictionary<string, ISpecFlowCucumberExpressionParameterType>>(InitializeRegistry, true);
         }
 
         public static string ConvertQuotedString(string message)
@@ -23,7 +23,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
             return message;
         }
 
-        private Dictionary<string, CucumberExpressionParameterType> InitializeRegistry()
+        private Dictionary<string, ISpecFlowCucumberExpressionParameterType> InitializeRegistry()
         {
             var boolBindingType = new RuntimeBindingType(typeof(bool));
             var byteBindingType = new RuntimeBindingType(typeof(byte));
@@ -44,10 +44,10 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
             var builtInTransformations = new[]
             {
                 // official cucumber expression types
-                new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, objectBindingType, name: string.Empty),
-                new BuiltInCucumberExpressionParameterTypeTransformation(@"(-?\d+)", intBindingType, "int"),
-                new BuiltInCucumberExpressionParameterTypeTransformation(@"(.*?)", doubleBindingType, "float"), //TODO: make it specific based on the binding culture
-                new BuiltInCucumberExpressionParameterTypeTransformation(@"([^\s]+)", stringBindingType, "word"),
+                new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, objectBindingType, name: string.Empty, useForSnippets: false),
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.IntParameterRegex, intBindingType, ParameterTypeConstants.IntParameterName, weight: 1000),
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.FloatParameterRegex, doubleBindingType, ParameterTypeConstants.FloatParameterName),
+                new BuiltInCucumberExpressionParameterTypeTransformation(ParameterTypeConstants.WordParameterRegex, stringBindingType, ParameterTypeConstants.WordParameterName, useForSnippets: false),
 
                 // other types supported by SpecFlow by default: Make them accessible with type name (e.g. Int32)
                 new BuiltInCucumberExpressionParameterTypeTransformation(CucumberExpressionParameterType.MatchAllRegex, boolBindingType),
@@ -64,8 +64,8 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
             };
 
             var convertQuotedStringMethod = new RuntimeBindingMethod(GetType().GetMethod(nameof(ConvertQuotedString)));
-            _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(@"""([^""]*)""", convertQuotedStringMethod, "string"));
-            _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(@"'([^']*)'", convertQuotedStringMethod, "string"));
+            _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(ParameterTypeConstants.StringParameterRegexDoubleQuote, convertQuotedStringMethod, ParameterTypeConstants.StringParameterName));
+            _bindingRegistry.RegisterStepArgumentTransformationBinding(new CucumberExpressionParameterTypeBinding(ParameterTypeConstants.StringParameterRegexApostrophe, convertQuotedStringMethod, ParameterTypeConstants.StringParameterName));
 
             var userTransformations = _bindingRegistry.GetStepTransformations().Select(t => new UserDefinedCucumberExpressionParameterTypeTransformation(t));
 
@@ -73,7 +73,7 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
                 .Concat(userTransformations)
                 .GroupBy(t => new Tuple<IBindingType, string>(t.TargetType, t.Name))
                 .Select(g => new CucumberExpressionParameterType(g.Key.Item2 ?? g.Key.Item1.Name, g.Key.Item1, g))
-                .ToDictionary(pt => pt.Name, pt => pt);
+                .ToDictionary(pt => pt.Name, pt => (ISpecFlowCucumberExpressionParameterType)pt);
 
             DumpParameterTypes(parameterTypes);
 
@@ -81,20 +81,25 @@ namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
         }
 
         [Conditional("DEBUG")]
-        private static void DumpParameterTypes(Dictionary<string, CucumberExpressionParameterType> parameterTypes)
+        private static void DumpParameterTypes(Dictionary<string, ISpecFlowCucumberExpressionParameterType> parameterTypes)
         {
             foreach (var parameterType in parameterTypes)
             {
                 Console.WriteLine(
-                    $"PT: {parameterType.Key}, transformations: {string.Join(",", parameterType.Value.Transformations.Select(t => t.Regex))}, Regexes: {string.Join(",", parameterType.Value.RegexStrings)}");
+                    $"PT: {parameterType.Key}, transformations: {string.Join(",", parameterType.Value.Transformations.Select(t => t.Regex))}, Regexps: {string.Join(",", parameterType.Value.RegexStrings)}");
             }
         }
 
-        public CucumberExpressionParameterType GetByName(string name)
+        public IParameterType LookupByTypeName(string name)
         {
             if (_parameterTypesByName.Value.TryGetValue(name, out var parameterType))
                 return parameterType;
             return null;
+        }
+
+        public IEnumerable<IParameterType> GetParameterTypes()
+        {
+            return _parameterTypesByName.Value.Values;
         }
     }
 }

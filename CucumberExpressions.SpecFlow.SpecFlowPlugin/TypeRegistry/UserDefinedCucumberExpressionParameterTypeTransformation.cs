@@ -1,23 +1,30 @@
 ﻿using System;
 using TechTalk.SpecFlow.Bindings;
 using TechTalk.SpecFlow.Bindings.Reflection;
-using System.Text.RegularExpressions;
 using RegexClass = System.Text.RegularExpressions.Regex;
 
-namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.Expressions
+namespace CucumberExpressions.SpecFlow.SpecFlowPlugin.TypeRegistry
 {
     public class UserDefinedCucumberExpressionParameterTypeTransformation : ICucumberExpressionParameterTypeTransformation
     {
         private readonly IStepArgumentTransformationBinding _stepArgumentTransformationBinding;
 
-        public string Name => _stepArgumentTransformationBinding is CucumberExpressionParameterTypeBinding parameterTypeBinding ? parameterTypeBinding.Name : null; // later IStepArgumentTransformationBinding could capture name
+        public string Name => GetProvidedTransformationTypeName(_stepArgumentTransformationBinding);
         public string Regex { get; }
         public IBindingType TargetType => _stepArgumentTransformationBinding.Method.ReturnType;
+        public bool UseForSnippets => true;
+        public int Weight => 0;
 
         public UserDefinedCucumberExpressionParameterTypeTransformation(IStepArgumentTransformationBinding stepArgumentTransformationBinding)
         {
             _stepArgumentTransformationBinding = stepArgumentTransformationBinding;
             Regex = GetCucumberExpressionRegex(stepArgumentTransformationBinding);
+        }
+
+        private static string GetProvidedTransformationTypeName(IStepArgumentTransformationBinding transformationBinding)
+        {
+            // later IStepArgumentTransformationBinding could capture name
+            return transformationBinding is CucumberExpressionParameterTypeBinding parameterTypeBinding ? parameterTypeBinding.Name : null; 
         }
 
         private string GetCucumberExpressionRegex(IStepArgumentTransformationBinding stepArgumentTransformationBinding)

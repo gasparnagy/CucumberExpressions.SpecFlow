@@ -7,5 +7,6 @@ Scenario: Test scenario
 	And I add 5 copies of the book "Formulation: Express examples using Given/When/Then" into my basket
 	Then my basket should contain 6 books
 	And they cost $10 in total
+	And the weight of them is 12.5 kg
 	Then the user should be user Marvin
 	Then the coordinates should be 12, 45
