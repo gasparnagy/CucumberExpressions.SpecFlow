@@ -8,13 +8,13 @@ With Cucumber expressions you can specify your step definitions in a simpler way
 
 Instead of using regular expressions:
 
-```
+```C#
 [When(@"I add (\d+) copies of the book ""([^""])"" into my basket")]
 ```
   
 Use Cucumber expressions:
 
-```
+```C#
 [When("I add {int} copies of the book {string} into my basket")]
 ```
   
@@ -34,7 +34,7 @@ You can also use the most common built-in types by (case sensitive) type name (w
 
 The custom conversions can be used either with the anonymous parameter `{}` or with the target type name, like `{Person}`. To specify the conversion, you need to use the usual `[StepArgumentTransformation]` attribute:
 
-```
+```c#
 [StepArgumentTransformation]
 public Person ConvertPerson(string name)
 {
@@ -46,7 +46,7 @@ public Person ConvertPerson(string name)
 
 It is mostly backwards compatible as it recognizes common regex patterns and uses regex mathching for them. If necessary you can force using the regex matcher by wrapping your pattern with `^` and `$`.
 
-```
+```C#
 [When(@"^forced regex$")]
 ```
 
