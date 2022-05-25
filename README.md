@@ -54,4 +54,4 @@ It is mostly backwards compatible as it recognizes common regex patterns and use
 
 To be able to recognize Cucumber expression in your Visual Studio, the Visual Studio integration also has to be updated. Currently the [Devreoom for SpecFlow](https://github.com/specsolutions/deveroom-visualstudio) (free, open-source) Visual Studio extension supports this new patterns.
 
-
+The [VSCode Cucumber Extension](https://marketplace.visualstudio.com/items?itemName=CucumberOpen.cucumber-official) also has support for Cucumber Expressions.
